@@ -7,10 +7,19 @@ export default class Todo extends Component {
     const link = this.props.done ? 'Undo' : 'Completed'
     return (
       <li className={className}>
-        <span>{this.props.id}</span>
-        <span>{this.props.title}</span>
-        <a href="">{link}</a>
-        <p>{this.props.description}</p>
+        <nav className="panel">
+          <div className="panel-heading">
+            <p>
+              {this.props.id}: {this.props.title}
+            </p>
+          </div>
+          <div className="panel-block">
+            <p>{this.props.description}</p>
+          </div>
+          <div className="panel-block">
+            <a href="">{link}</a>
+          </div>
+        </nav>
       </li>
     )
   }

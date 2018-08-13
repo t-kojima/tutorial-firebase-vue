@@ -26,8 +26,14 @@ export default class App extends Component {
   render() {
     return (
       <div className="app">
-        <h1>ToDo Application.</h1>
-        <TodoList todos={this.state.todos} />
+        <section className="hero container is-info">
+          <div className="hero-body">
+            <h1 className="title">ToDo Application.</h1>
+          </div>
+        </section>
+        <section className="container">
+          <TodoList todos={this.state.todos} />
+        </section>
       </div>
     )
   }
