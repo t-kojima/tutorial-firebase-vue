@@ -14,9 +14,9 @@ module.exports = {
     it: false,
   },
   rules: {
-    'react/jsx-uses-vars': 1,
-    'react/jsx-uses-react': 1,
-    'space-before-function-paren': 0,
+    'react/jsx-uses-vars': Warn,
+    'react/jsx-uses-react': Warn,
+    'space-before-function-paren': Disable,
     'prettier/prettier': [
       'error',
       {
