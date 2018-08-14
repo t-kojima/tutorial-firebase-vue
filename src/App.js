@@ -1,27 +1,21 @@
 import React, { Component } from 'react'
-import logo from './logo.svg'
 import TodoList from './TodoList'
+import InputForm from './InputForm'
 import './App.css'
+import firebase from 'firebase/app'
+import 'firebase/database'
 
 export default class App extends Component {
   constructor() {
     super()
     this.state = {
-      todos: [
-        {
-          id: 1,
-          title: 'Hello React',
-          description: 'React始めました',
-          done: false
-        },
-        {
-          id: 2,
-          title: 'Hello Redux',
-          description: 'うそです',
-          done: false
-        }
-      ]
+      todos: []
     }
+  }
+  componentDidMount(){
+    firebase.database().ref('todos').once('value').then(snapshot => {
+      this.setState({todos: Object.values(snapshot.val())})
+    })
   }
   render() {
     return (
@@ -32,21 +26,10 @@ export default class App extends Component {
           </div>
         </section>
         <section className="container">
+          <InputForm />
           <TodoList todos={this.state.todos} />
         </section>
       </div>
     )
   }
 }
-
-// export default () => (
-//   <div className="App">
-//     <header className="App-header">
-//       <img src={logo} className="App-logo" alt="logo" />
-//       <h1 className="App-title">Welcome to React</h1>
-//     </header>
-//     <p className="App-intro">
-//       To get started, edit <code>src/App.js</code> and save to reload.
-//     </p>
-//   </div>
-// )

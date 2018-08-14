@@ -1,10 +1,18 @@
 import React, { Component } from 'react'
 
 export default class Todo extends Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      checked: false
+    }
+  }
+  onChange() {
+    console.log(this)
+  }
   render() {
-    console.log(this.props)
     const className = 'undone'
-    const link = this.props.done ? 'Undo' : 'Completed'
+    const link = this.state.checked ? 'Undo' : 'Completed'
     return (
       <li className={className}>
         <nav className="panel">
@@ -14,7 +22,10 @@ export default class Todo extends Component {
             </p>
           </div>
           <div className="panel-block">
-            <p>{this.props.description}</p>
+            <label className="checkbox">
+              <input type="checkbox" onChange={this.onChange} checked={this.state.checked}/>
+              {this.props.description}
+            </label>
           </div>
           <div className="panel-block">
             <a href="">{link}</a>
@@ -24,12 +35,3 @@ export default class Todo extends Component {
     )
   }
 }
-
-// export default () => (
-//   <li className="undone">
-//     <span>{this.props.id}</span>
-//     <span>{this.props.title}</span>
-//     <a href="">{this.props.done ? 'Undo' : 'Completed'}</a>
-//     <p>{this.props.description}</p>
-//   </li>
-// )
