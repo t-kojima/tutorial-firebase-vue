@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-// import { firebaseDb } from 'firebase'
 import firebase from 'firebase/app'
 import 'firebase/database'
 
@@ -8,7 +7,7 @@ export default class Todo extends Component {
     super(props)
     this.state = {
       text: '',
-      checked: false
+      desc: ''
     }
     this.onClick = this.onClick.bind(this)
   }
@@ -24,19 +23,36 @@ export default class Todo extends Component {
       .set({
         id: newKey,
         title: this.state.text,
-        description: '',
+        description: this.state.desc,
         checked: false
       })
-    console.log('value set')
+    this.setState({ text: '', desc: '' })
   }
   render() {
     return (
-      <div>
-        <input
-          value={this.state.text}
-          onChange={e => this.setState({ text: e.target.value })}
-        />
-        <button onClick={this.onClick}>Submit</button>
+      <div className="container">
+        <div className="field">
+          <label className="label">Title</label>
+          <input
+            className="input"
+            value={this.state.text}
+            onChange={e => this.setState({ text: e.target.value })}
+          />
+        </div>
+        <div className="field">
+          <label className="label">Description</label>
+          <input
+            className="input"
+            value={this.state.desc}
+            onChange={e => this.setState({ desc: e.target.value })}
+          />
+        </div>
+
+        <div className="control">
+          <button className="button is-link" onClick={this.onClick}>
+            Submit
+          </button>
+        </div>
       </div>
     )
   }

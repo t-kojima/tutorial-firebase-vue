@@ -12,10 +12,14 @@ export default class App extends Component {
       todos: []
     }
   }
-  componentDidMount(){
-    firebase.database().ref('todos').once('value').then(snapshot => {
-      this.setState({todos: Object.values(snapshot.val())})
-    })
+  componentDidMount() {
+    firebase
+      .database()
+      .ref('todos')
+      .once('value')
+      .then(snapshot => {
+        this.setState({ todos: Object.values(snapshot.val()) })
+      })
   }
   render() {
     return (
