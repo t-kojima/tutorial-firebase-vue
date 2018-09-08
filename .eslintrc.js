@@ -4,8 +4,8 @@ module.exports = {
     es6: true,
   },
   extends: [
-    'react-app',
     'eslint:recommended',
+    'react-app',
   ],
   plugins: ['react'],
   rules: {

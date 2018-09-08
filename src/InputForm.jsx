@@ -1,42 +1,33 @@
-import React, { Component } from 'react'
-import firebase from 'firebase/app'
-import 'firebase/database'
+import React, { Component } from 'react';
+import { firebaseDb } from './firebase';
 
 export default class Todo extends Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-      text: '',
-      desc: ''
-    }
-    this.onClick = this.onClick.bind(this)
+      title: '',
+      desc: '',
+    };
   }
 
-  onClick() {
-    const newKey = firebase
-      .database()
-      .ref('todos')
-      .push().key
-    firebase
-      .database()
-      .ref(`todos/${newKey}`)
-      .set({
-        id: newKey,
-        title: this.state.text,
-        description: this.state.desc,
-        checked: false
-      })
-    this.setState({ text: '', desc: '' })
-  }
+  onClick = () => {
+    firebaseDb.ref(`todos`).push({
+      title: this.state.title,
+      description: this.state.desc,
+      checked: false,
+    });
+    this.setState({ title: '', desc: '' });
+  };
   render() {
+    const { title, desc } = this.state;
     return (
       <div className="container">
         <div className="field">
           <label className="label">Title</label>
           <input
             className="input"
-            value={this.state.text}
-            onChange={e => this.setState({ text: e.target.value })}
+            value={this.state.title}
+            onChange={e => this.setState({ title: e.target.value })}
           />
         </div>
         <div className="field">
@@ -49,11 +40,14 @@ export default class Todo extends Component {
         </div>
 
         <div className="control">
-          <button className="button is-link" onClick={this.onClick}>
-            Submit
-          </button>
+          {title &&
+            desc && (
+              <button className="button is-link" onClick={this.onClick}>
+                Submit
+              </button>
+            )}
         </div>
       </div>
-    )
+    );
   }
 }

@@ -1,37 +1,40 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { firebaseDb } from './firebase';
 
 export default class Todo extends Component {
-  constructor(props){
-    super(props)
-    this.state = {
-      checked: false
-    }
-  }
-  onChange() {
-    console.log(this)
-  }
+  handleCheck = () =>
+    firebaseDb.ref(`todos/${this.props.id}`).update({
+      checked: !this.props.checked,
+    });
+
+  handleDelete = () => firebaseDb.ref(`todos/${this.props.id}`).remove();
+
   render() {
-    const className = 'undone'
-    const link = this.state.checked ? 'Undo' : 'Completed'
     return (
-      <li className={className}>
+      <li className="todo">
         <nav className="panel">
           <div className="panel-heading">
-            <p>
-              {this.props.id}: {this.props.title}
-            </p>
+            <p>{this.props.title}</p>
           </div>
           <div className="panel-block">
             <label className="checkbox">
-              <input type="checkbox" onChange={this.onChange} checked={this.state.checked}/>
+              <input
+                type="checkbox"
+                onChange={this.handleCheck}
+                checked={this.props.checked}
+              />
               {this.props.description}
             </label>
           </div>
           <div className="panel-block">
-            <a href="">{link}</a>
+            {this.props.checked && (
+              <button className="button is-link" onClick={this.handleDelete}>
+                Delete
+              </button>
+            )}
           </div>
         </nav>
       </li>
-    )
+    );
   }
 }

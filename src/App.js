@@ -1,25 +1,20 @@
-import React, { Component } from 'react'
-import TodoList from './TodoList'
-import InputForm from './InputForm'
-import './App.css'
-import firebase from 'firebase/app'
-import 'firebase/database'
+import React, { Component } from 'react';
+import TodoList from './TodoList';
+import InputForm from './InputForm';
+import './App.css';
+import { firebaseDb } from './firebase';
 
 export default class App extends Component {
   constructor() {
-    super()
+    super();
     this.state = {
-      todos: []
-    }
+      todos: [],
+    };
   }
   componentDidMount() {
-    firebase
-      .database()
+    firebaseDb
       .ref('todos')
-      .once('value')
-      .then(snapshot => {
-        this.setState({ todos: Object.values(snapshot.val()) })
-      })
+      .on('value', snapshot => this.setState({ todos: snapshot.val() || [] }));
   }
   render() {
     return (
@@ -34,6 +29,6 @@ export default class App extends Component {
           <TodoList todos={this.state.todos} />
         </section>
       </div>
-    )
+    );
   }
 }

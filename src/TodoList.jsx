@@ -1,16 +1,14 @@
-import React, { Component } from 'react'
-import { firebaseDb } from './firebase'
-import Todo from './Todo'
+import React, { Component } from 'react';
+import Todo from './Todo';
 
 export default class TodoList extends Component {
   render() {
     return (
       <ul>
-        {this.props.todos.map(todo => {
-          console.log(todo)
-          return <Todo key={todo.id} {...todo} />
-        })}
+        {Object.entries(this.props.todos).map(([key, value]) => (
+          <Todo key={key} id={key} {...value} />
+        ))}
       </ul>
-    )
+    );
   }
 }
