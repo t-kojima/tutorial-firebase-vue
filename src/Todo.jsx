@@ -2,12 +2,21 @@ import React, { Component } from 'react';
 import { firebaseDb } from './firebase';
 
 export default class Todo extends Component {
-  handleCheck = () =>
+  constructor() {
+    super();
+    this.handleCheck = this.handleCheck.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+  }
+
+  handleCheck() {
     firebaseDb.ref(`todos/${this.props.id}`).update({
       checked: !this.props.checked,
     });
+  }
 
-  handleDelete = () => firebaseDb.ref(`todos/${this.props.id}`).remove();
+  handleDelete() {
+    firebaseDb.ref(`todos/${this.props.id}`).remove();
+  }
 
   render() {
     return (

@@ -1,23 +1,25 @@
 import React, { Component } from 'react';
 import { firebaseDb } from './firebase';
 
-export default class Todo extends Component {
+export default class InputForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
       title: '',
       desc: '',
     };
+    this.onClick = this.onClick.bind(this);
   }
 
-  onClick = () => {
+  onClick() {
     firebaseDb.ref(`todos`).push({
       title: this.state.title,
       description: this.state.desc,
       checked: false,
     });
     this.setState({ title: '', desc: '' });
-  };
+  }
+
   render() {
     const { title, desc } = this.state;
     return (
